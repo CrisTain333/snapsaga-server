@@ -43,6 +43,7 @@
         "@types/bcrypt": "^5.0.0",
         "@types/cookie-parser": "^1.4.3",
         "@types/jsonwebtoken": "^9.0.2",
-        "husky": "^8.0.0"
+        "husky": "^8.0.0",
+        "prisma": "^5.4.2"
     }
 }
