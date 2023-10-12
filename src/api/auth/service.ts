@@ -67,11 +67,11 @@ const login = async (payload: ILoginUser) => {
             'Invalid credentials'
         );
     }
-    const { name, email } = isUserExist;
+    const { email, role } = isUserExist;
 
     // if matched created
     const accessToken = jwtHelpers.createToken(
-        { name, email },
+        { role, email },
         config.jwt.secret as Secret,
         config.jwt.expires_in as string
     );
