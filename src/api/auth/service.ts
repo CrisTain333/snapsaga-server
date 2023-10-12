@@ -7,12 +7,17 @@ import { User } from '../user/model';
 import { ILoginUser, IRefreshTokenResponse } from './interface';
 import bcrypt from 'bcrypt';
 import { IUser } from '../user/interface';
+import { prisma } from '../../shared/primsa';
 
 const createUser = async (user: IUser): Promise<IUser | null> => {
     const { name, email, password } = user;
 
     //Check the email exist in database or not ;
-    const isExits = await User.findOne({ email: email });
+    const isExits = await prisma.user.findUnique({
+        where: {
+            email
+        }
+    });
 
     if (isExits) {
         throw new ApiError(
@@ -20,6 +25,8 @@ const createUser = async (user: IUser): Promise<IUser | null> => {
             'Email already exists'
         );
     }
+
+    // const hashedPassword = await
     // now create the user;
     const newUser = await User.create({
         name,

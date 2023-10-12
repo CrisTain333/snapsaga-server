@@ -2,6 +2,7 @@ import config from './config';
 import app from './app';
 // import { errorLogger, logger } from './shared/logger';
 import { Server } from 'http';
+import { hashPassword } from './shared/hashPassword';
 
 process.on('uncaughtException', error => {
     console.log(error);
@@ -17,6 +18,9 @@ async function fire() {
                 `Server Fire in http//localhost:${config.port}`
             );
         });
+
+        const has = await hashPassword('jncdoidhbjdyg');
+        console.log(has);
     } catch (error) {
         console.log('Error to connect Database');
     }

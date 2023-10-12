@@ -10,7 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model test {
-  id    Int     @id @default(autoincrement())
-  testNumber String  @unique
+model User {
+  id           Int      @id @default(autoincrement())
+  role         String   @default("user")
+  name         String   
+  email        String   @unique 
+  password     String   
+  location     String?   // User's location
+  phone        String?   // Contact phone number
+  profileImage String   @default("https://i.ibb.co/JHhYHC6/user.png")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
 }
