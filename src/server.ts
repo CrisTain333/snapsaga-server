@@ -15,7 +15,7 @@ async function fire() {
     try {
         server = app.listen(config.port, () => {
             console.log(
-                `Server Fire in http//localhost:${config.port}`
+                `Server Fire on http://localhost:${config.port}`
             );
         });
     } catch (error) {
