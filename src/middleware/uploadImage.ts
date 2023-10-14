@@ -12,7 +12,7 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET
 });
 
-async function uploadMultipleFiles(files: any) {
+export async function uploadMultipleFiles(files: any) {
     try {
         const uploadResults = [];
 
