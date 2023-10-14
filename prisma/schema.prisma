@@ -23,3 +23,17 @@ model User {
   updatedAt    DateTime @updatedAt
 
 }
+
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String   
+  banner      String
+  description String
+  category    String   
+  price       Float
+  availability Boolean
+  rating String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
