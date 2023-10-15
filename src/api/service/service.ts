@@ -82,8 +82,23 @@ const getSingleService = async (id: number) => {
 
     return result;
 };
+
+const getBestServices = async () => {
+    const services = await prisma.service.findMany({});
+
+    // if (services) {
+    //     const result = services
+    //         .filter(s => parseInt(s.rating) > 4.3)
+    //         ?.slice(0, 6);
+    //     return result;
+    // }
+
+    return services;
+};
+
 export const sService = {
     createService,
     getAllServices,
-    getSingleService
+    getSingleService,
+    getBestServices
 };

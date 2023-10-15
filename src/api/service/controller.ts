@@ -15,6 +15,7 @@ const createService = catchAsync(
         });
     }
 );
+
 const getSingleService = catchAsync(
     async (req: Request, res: Response) => {
         const { id } = req.params;
@@ -23,6 +24,17 @@ const getSingleService = catchAsync(
             statusCode: 200,
             success: true,
             message: 'Service retrieve successfully',
+            data: result
+        });
+    }
+);
+const getBestService = catchAsync(
+    async (req: Request, res: Response) => {
+        const result = await sService.getBestServices();
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Best Service retrieve successfully',
             data: result
         });
     }
@@ -75,5 +87,6 @@ const getAllService = catchAsync(
 export const ServiceController = {
     createService,
     getAllService,
-    getSingleService
+    getSingleService,
+    getBestService
 };

@@ -9,6 +9,7 @@ router.post(
     validateRequest(ServiceValidation.ServiceSchema),
     ServiceController.createService
 );
+router.get('/best-services', ServiceController.getBestService);
 router.get('/:id', ServiceController.getSingleService);
 router.get('/', ServiceController.getAllService);
 
