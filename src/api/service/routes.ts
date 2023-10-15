@@ -9,5 +9,7 @@ router.post(
     validateRequest(ServiceValidation.ServiceSchema),
     ServiceController.createService
 );
+router.get('/:id', ServiceController.getSingleService);
+router.get('/', ServiceController.getAllService);
 
 export const ServiceRoute = router;
