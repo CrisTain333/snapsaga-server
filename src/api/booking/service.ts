@@ -37,7 +37,26 @@ const getUserBooking = async (user: any) => {
     return result;
 };
 
+const deleteUserBooking = async (bookingID: any) => {
+    const bookingId = parseInt(bookingID);
+    try {
+        const result = await prisma.booking.delete({
+            where: {
+                id: bookingId
+            }
+        });
+
+        return result;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'Error Deleting Your Service'
+        );
+    }
+};
+
 export const BookingService = {
     createBooking,
-    getUserBooking
+    getUserBooking,
+    deleteUserBooking
 };

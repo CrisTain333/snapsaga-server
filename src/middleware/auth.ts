@@ -4,9 +4,11 @@ import config from '../config';
 import { jwtHelpers } from '../utils/helper/jwtHelpers';
 import ApiError from '../error/ApiError';
 import { NextFunction, Response } from 'express';
+import { httpCode } from '../shared/httpCodes';
 
 const auth =
-    () => async (req: any, res: Response, next: NextFunction) => {
+    (...requiredRoles: string[]) =>
+    async (req: any, res: Response, next: NextFunction) => {
         try {
             //get authorization token
             const token = req.headers.authorization;
@@ -21,6 +23,16 @@ const auth =
                 config.jwt.secret as Secret
             );
             req.user = verifiedUser;
+            // role diye guard korar jnno
+            if (
+                requiredRoles.length &&
+                !requiredRoles.includes(verifiedUser.role)
+            ) {
+                throw new ApiError(
+                    httpCode.FORBIDDEN,
+                    `You Don't  have permission to access this.`
+                );
+            }
             next();
         } catch (error) {
             next(error);
