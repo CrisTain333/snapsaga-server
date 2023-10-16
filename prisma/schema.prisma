@@ -13,27 +13,40 @@ datasource db {
 model User {
   id           Int      @id @default(autoincrement())
   role         String   @default("user")
-  name         String   
-  email        String   @unique 
-  password     String   
-  location     String?   // User's location
-  phone        String?   // Contact phone number
+  name         String
+  email        String   @unique
+  password     String
+  location     String? // User's location
+  phone        String? // Contact phone number
   profileImage String   @default("https://i.ibb.co/JHhYHC6/user.png")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  Booking Booking[]
 }
 
-
 model Service {
-  id          Int      @id @default(autoincrement())
-  title       String   
-  banner      String
-  description String
-  category    String   
-  price       Float
+  id           Int       @id @default(autoincrement())
+  title        String
+  banner       String
+  description  String
+  category     String
+  price        Float
   availability Boolean
-  rating String
+  rating       String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  Booking      Booking[]
+}
+
+model Booking {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  service     Service  @relation(fields: [serviceId], references: [id])
+  serviceId   Int
+  bookingInfo Json
+  status      String // You can use an enum for status like 'pending', 'confirmed', 'canceled', etc.
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
