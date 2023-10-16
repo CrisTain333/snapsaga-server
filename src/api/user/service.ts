@@ -11,6 +11,9 @@ const getUser = async (user: JwtPayload): Promise<IUser | null> => {
     const profile = await prisma.user.findUnique({
         where: {
             email
+        },
+        include: {
+            Booking: true
         }
     });
     if (!profile) {

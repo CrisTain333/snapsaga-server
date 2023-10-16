@@ -17,6 +17,27 @@ const createBooking = async (data: any) => {
     }
 };
 
+const getUserBooking = async (user: any) => {
+    const rUser = await prisma.user.findUnique({
+        where: {
+            email: user.email
+        }
+    });
+
+    const result = await prisma.booking.findMany({
+        where: {
+            userId: rUser?.id
+        },
+        include: {
+            service: true,
+            user: true
+        }
+    });
+
+    return result;
+};
+
 export const BookingService = {
-    createBooking
+    createBooking,
+    getUserBooking
 };

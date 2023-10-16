@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import catchAsync from '../../shared/catchAsync';
 import sendResponse from '../../shared/sendResponse';
@@ -17,7 +18,20 @@ const createBooking = catchAsync(
         });
     }
 );
+const getUserBookings = catchAsync(
+    async (req: any, res: Response) => {
+        const user = req.user;
+        const result = await BookingService.getUserBooking(user);
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Bookings retrieve successfully',
+            data: result
+        });
+    }
+);
 
 export const BookingController = {
-    createBooking
+    createBooking,
+    getUserBookings
 };
