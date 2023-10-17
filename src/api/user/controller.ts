@@ -40,9 +40,30 @@ const updateProfileData = catchAsync(
         });
     }
 );
+const getAllUsers = catchAsync(async (req: any, res: Response) => {
+    const result = await UserService.getAllUser();
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'User  fetched successfully',
+        data: result
+    });
+});
+const deleteUser = catchAsync(async (req: any, res: Response) => {
+    const id = req.params.id;
+    const result = await UserService.deleteUser(parseInt(id));
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'User  deleted successfully',
+        data: result
+    });
+});
 
 export const UserController = {
     getUser,
     updateProfilePicture,
-    updateProfileData
+    updateProfileData,
+    getAllUsers,
+    deleteUser
 };

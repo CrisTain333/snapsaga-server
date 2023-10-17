@@ -24,6 +24,8 @@ const auth =
             );
             req.user = verifiedUser;
             // role diye guard korar jnno
+
+            console.log(verifiedUser);
             if (
                 requiredRoles.length &&
                 !requiredRoles.includes(verifiedUser.role)

@@ -4,8 +4,14 @@ import auth from '../../middleware/auth';
 import { uploadSystem } from '../../middleware/uploadSystem';
 import validateRequest from '../../middleware/validateRequest';
 import { userZodValidation } from './validate';
+import { User_Role } from '../../enums/user';
 const router = express.Router();
 
+router.get(
+    '/all-users',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    UserController.getAllUsers
+);
 router.get('/me', auth(), UserController.getUser);
 router.post(
     '/update-profile',
@@ -20,4 +26,9 @@ router.post(
     UserController.updateProfileData
 );
 
+router.delete(
+    '/:id',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    UserController.deleteUser
+);
 export const UserRoute = router;

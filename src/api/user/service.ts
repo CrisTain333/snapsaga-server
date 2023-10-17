@@ -61,8 +61,29 @@ const updateProfileData = async (req: any, data: any) => {
     return newData;
 };
 
+const getAllUser = async () => {
+    const result = await prisma.user.findMany({});
+    return result;
+};
+
+const deleteUser = async (id: any) => {
+    try {
+        const result = await prisma.user.delete({
+            where: {
+                id: parseInt(id)
+            }
+        });
+
+        return result;
+    } catch (error) {
+        throw new ApiError(httpCode.BAD_REQUEST, 'Invalid Id');
+    }
+};
+
 export const UserService = {
     getUser,
     updateProfileData,
-    updateProfilePicture
+    updateProfilePicture,
+    getAllUser,
+    deleteUser
 };
