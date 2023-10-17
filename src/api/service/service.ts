@@ -36,6 +36,11 @@ const getAllServices = async (
                               description: {
                                   contains: searchQuery.toLowerCase()
                               }
+                          },
+                          {
+                              category: {
+                                  contains: searchQuery.toLowerCase()
+                              }
                           }
                           // Add more fields to search as needed
                       ]

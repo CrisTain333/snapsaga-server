@@ -11,6 +11,7 @@ const createReview = async (data: any) => {
 
         return result;
     } catch (error) {
+        console.log(error);
         throw new ApiError(
             httpCode.BAD_REQUEST,
             'Failed to add review'
@@ -18,6 +19,25 @@ const createReview = async (data: any) => {
     }
 };
 
+const getReviewsById = async (serviceId: any) => {
+    try {
+        const result = await prisma.review.findMany({
+            where: {
+                serviceId: serviceId
+            },
+            include: {
+                service: true,
+                user: true
+            }
+        });
+
+        return result;
+    } catch (error) {
+        throw new ApiError(httpCode.BAD_REQUEST, 'Invalid Id');
+    }
+};
+
 export const ReviewService = {
-    createReview
+    createReview,
+    getReviewsById
 };
