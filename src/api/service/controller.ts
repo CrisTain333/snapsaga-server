@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import catchAsync from '../../shared/catchAsync';
 import { sService } from './service';
@@ -30,13 +31,30 @@ const getSingleService = catchAsync(
 );
 const getBestService = catchAsync(
     async (req: Request, res: Response) => {
-        const result = await sService.getBestServices();
+        const { page }: any = req.query;
+        const result = await sService.getBestServices(parseInt(page));
         sendResponse(res, {
             statusCode: 200,
             success: true,
             message: 'Best Service retrieve successfully',
             data: result?.data,
             meta: result?.meta
+        });
+    }
+);
+const updateService = catchAsync(
+    async (req: Request, res: Response) => {
+        const id = req.params.id;
+        const { ...updatedData } = req.body;
+        const result = await sService.updateService(
+            parseInt(id),
+            updatedData
+        );
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Service updated successfully',
+            data: result
         });
     }
 );
@@ -102,5 +120,6 @@ export const ServiceController = {
     getAllService,
     getSingleService,
     getBestService,
-    deleteServiceF
+    deleteServiceF,
+    updateService
 };

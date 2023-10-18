@@ -90,7 +90,7 @@ const getSingleService = async (id: number) => {
 
 const getBestServices = async (
     page: number = 1,
-    pageSize: number = 10
+    pageSize: number = 5
 ) => {
     const skip = (page - 1) * pageSize;
     const take = pageSize;
@@ -126,10 +126,29 @@ const deleteService = async (id: number) => {
     }
 };
 
+const updateService = async (id: number, data: any) => {
+    try {
+        const service = await prisma.service.update({
+            where: {
+                id: id
+            },
+            data: data
+        });
+
+        return service;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'Failed to update Service'
+        );
+    }
+};
+
 export const sService = {
     createService,
     getAllServices,
     getSingleService,
     getBestServices,
-    deleteService
+    deleteService,
+    updateService
 };

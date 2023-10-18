@@ -19,5 +19,10 @@ router.delete(
     auth(User_Role.SUPER_ADMIN, User_Role.ADMIN),
     ServiceController.deleteServiceF
 );
+router.patch(
+    '/:id',
+    auth(User_Role.SUPER_ADMIN, User_Role.ADMIN),
+    ServiceController.updateService
+);
 
 export const ServiceRoute = router;
