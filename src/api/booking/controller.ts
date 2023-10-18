@@ -30,6 +30,31 @@ const getUserBookings = catchAsync(
         });
     }
 );
+const getAllBookings = catchAsync(async (req: any, res: Response) => {
+    const { page }: any = req.query;
+    const result = await BookingService.getAllBookings(
+        parseInt(page)
+    );
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Bookings fetched successfully',
+        data: result?.data,
+        meta: result?.meta
+    });
+});
+
+const cancelBookings = catchAsync(async (req: any, res: Response) => {
+    // const { page }: any = req.query;
+    const id = req.params.id;
+    const result = await BookingService.cancelBooking(parseInt(id));
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Bookings canceled successfully',
+        data: result
+    });
+});
 
 const deleteUserBooking = catchAsync(
     async (req: any, res: Response) => {
@@ -50,5 +75,7 @@ const deleteUserBooking = catchAsync(
 export const BookingController = {
     createBooking,
     getUserBookings,
-    deleteUserBooking
+    deleteUserBooking,
+    getAllBookings,
+    cancelBookings
 };

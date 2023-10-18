@@ -2,6 +2,7 @@
 import { prisma } from '../../shared/primsa';
 import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
+import { BookingStatus } from '../../enums/user';
 
 const createBooking = async (data: any) => {
     try {
@@ -13,6 +14,26 @@ const createBooking = async (data: any) => {
         throw new ApiError(
             httpCode.BAD_REQUEST,
             'Failed to Book Service'
+        );
+    }
+};
+const cancelBooking = async (bookingId: any) => {
+    console.log(bookingId);
+    try {
+        const result = await prisma.booking.update({
+            where: {
+                id: parseInt(bookingId)
+            },
+            data: {
+                status: BookingStatus.CANCELED
+            }
+        });
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'Failed to cancel Booking'
         );
     }
 };
@@ -55,8 +76,39 @@ const deleteUserBooking = async (bookingID: any) => {
     }
 };
 
+const getAllBookings = async (
+    page: number = 1,
+    pageSize: number = 5
+) => {
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+    const bookings = await prisma.booking.findMany({
+        include: {
+            service: true,
+            user: true
+        },
+        skip,
+        take
+    });
+
+    const totalBooking = await prisma.booking.count({});
+
+    const meta = {
+        page: page,
+        limit: pageSize,
+        total: Math.ceil(totalBooking / pageSize)
+    };
+
+    return {
+        data: bookings,
+        meta: meta
+    };
+};
+
 export const BookingService = {
     createBooking,
     getUserBooking,
-    deleteUserBooking
+    deleteUserBooking,
+    getAllBookings,
+    cancelBooking
 };

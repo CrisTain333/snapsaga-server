@@ -12,9 +12,19 @@ router.post(
     validateRequest(BookingValidation.BookingZodSchema),
     BookingController.createBooking
 );
+router.get(
+    '/all-bookings',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    BookingController.getAllBookings
+);
+router.patch(
+    '/cancel-booking/:id',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    BookingController.cancelBookings
+);
 router.delete(
     '/:id',
-    auth(User_Role.USER,User_Role.SUPER_ADMIN),
+    auth(User_Role.USER, User_Role.SUPER_ADMIN),
     BookingController.deleteUserBooking
 );
 
