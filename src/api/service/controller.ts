@@ -39,6 +39,18 @@ const getBestService = catchAsync(
         });
     }
 );
+const deleteServiceF = catchAsync(
+    async (req: Request, res: Response) => {
+        const id = req.params.id;
+        const result = await sService.deleteService(parseInt(id));
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Service Deleted',
+            data: result
+        });
+    }
+);
 
 const getAllService = catchAsync(
     async (req: Request, res: Response) => {
@@ -88,5 +100,6 @@ export const ServiceController = {
     createService,
     getAllService,
     getSingleService,
-    getBestService
+    getBestService,
+    deleteServiceF
 };

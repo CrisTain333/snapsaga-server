@@ -93,9 +93,23 @@ const getBestServices = async () => {
     return services;
 };
 
+const deleteService = async (id: number) => {
+    try {
+        const services = await prisma.service.delete({
+            where: {
+                id: id
+            }
+        });
+        return services;
+    } catch (error) {
+        throw new ApiError(httpCode.BAD_REQUEST, 'Invalid id');
+    }
+};
+
 export const sService = {
     createService,
     getAllServices,
     getSingleService,
-    getBestServices
+    getBestServices,
+    deleteService
 };
