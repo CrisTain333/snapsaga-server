@@ -60,10 +60,26 @@ const deleteUser = catchAsync(async (req: any, res: Response) => {
     });
 });
 
+const updateUser = catchAsync(async (req: any, res: Response) => {
+    const email = req.params.email;
+    const { ...updatedData } = req.body;
+    const result = await UserService.updateProfileByAdmin(
+        email,
+        updatedData
+    );
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'User  Updated successfully',
+        data: result
+    });
+});
+
 export const UserController = {
     getUser,
     updateProfilePicture,
     updateProfileData,
     getAllUsers,
-    deleteUser
+    deleteUser,
+    updateUser
 };

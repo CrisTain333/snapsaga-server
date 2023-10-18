@@ -80,10 +80,29 @@ const deleteUser = async (id: any) => {
     }
 };
 
+const updateProfileByAdmin = async (email: string, data: any) => {
+    // const { email } = req.user;
+    try {
+        const newData = await prisma.user.update({
+            where: {
+                email: email
+            },
+            data: data
+        });
+        return newData;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'Failed to update user data'
+        );
+    }
+};
+
 export const UserService = {
     getUser,
     updateProfileData,
     updateProfilePicture,
     getAllUser,
-    deleteUser
+    deleteUser,
+    updateProfileByAdmin
 };

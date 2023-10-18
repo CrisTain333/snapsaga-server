@@ -31,4 +31,9 @@ router.delete(
     auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
     UserController.deleteUser
 );
+router.post(
+    '/:email',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    UserController.updateProfileData
+);
 export const UserRoute = router;
