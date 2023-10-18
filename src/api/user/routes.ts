@@ -33,6 +33,7 @@ router.delete(
 );
 router.post(
     '/:email',
+    validateRequest(userZodValidation.userUpdateZodSchema),
     auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
     UserController.updateProfileData
 );
