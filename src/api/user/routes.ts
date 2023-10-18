@@ -27,6 +27,12 @@ router.get(
     UserController.getAdmins
 );
 
+router.patch(
+    '/admin/update-role',
+    auth(User_Role.SUPER_ADMIN),
+    UserController.updateRole
+);
+
 router.post(
     '/update-profile-data',
     validateRequest(userZodValidation.userUpdateZodSchema),

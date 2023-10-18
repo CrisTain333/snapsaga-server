@@ -91,7 +91,6 @@ const deleteUser = async (id: any) => {
 };
 
 const updateProfileByAdmin = async (email: string, data: any) => {
-    // const { email } = req.user;
     try {
         const newData = await prisma.user.update({
             where: {
@@ -108,6 +107,25 @@ const updateProfileByAdmin = async (email: string, data: any) => {
     }
 };
 
+const updateRole = async (email: any, role: any) => {
+    try {
+        const result = await prisma.user.update({
+            where: {
+                email: email
+            },
+            data: {
+                role: role
+            }
+        });
+        return result;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'User Role Update Failed'
+        );
+    }
+};
+
 export const UserService = {
     getUser,
     updateProfileData,
@@ -115,5 +133,6 @@ export const UserService = {
     getAllUser,
     deleteUser,
     updateProfileByAdmin,
-    getAllAdmin
+    getAllAdmin,
+    updateRole
 };

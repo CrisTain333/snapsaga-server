@@ -84,6 +84,18 @@ const getAdmins = catchAsync(async (req: any, res: Response) => {
     });
 });
 
+const updateRole = catchAsync(async (req: any, res: Response) => {
+    const email = req.params.email;
+    const role = req.body;
+    const result = await UserService.updateRole(email, role);
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: `User role updated`,
+        data: result
+    });
+});
+
 export const UserController = {
     getUser,
     updateProfilePicture,
@@ -91,5 +103,6 @@ export const UserController = {
     getAllUsers,
     deleteUser,
     updateUser,
-    getAdmins
+    getAdmins,
+    updateRole
 };
