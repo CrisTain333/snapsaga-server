@@ -90,11 +90,11 @@ const deleteUser = async (id: any) => {
     }
 };
 
-const updateProfileByAdmin = async (email: string, data: any) => {
+const updateProfileByAdmin = async (id: string, data: any) => {
     try {
         const newData = await prisma.user.update({
             where: {
-                email: email
+                id: parseInt(id)
             },
             data: data
         });
