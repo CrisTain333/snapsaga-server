@@ -20,23 +20,18 @@ export const uploadSystem = multer({
     fileFilter: (req: any, file: any, cb: any) => {
         if (
             file.fieldname === 'images' ||
+            file.fieldname === 'banner' ||
             file.fieldname === 'shopProfile' ||
             file.fieldname === 'profilePicture'
         ) {
             if (
                 file.mimetype === 'image/jpg' ||
                 file.mimetype === 'image/jpeg' ||
-                file.mimetype === 'image/png' ||
-                file.mimetype === 'application/pdf' ||
-                file.mimetype === 'application/docx'
+                file.mimetype === 'image/png'
             ) {
                 cb(null, true);
             } else {
-                cb(
-                    new Error(
-                        'only .jpg .jpeg .png .pdf .docx are allowed'
-                    )
-                );
+                cb(new Error('only .jpg .jpeg .png  are allowed'));
             }
         }
     }

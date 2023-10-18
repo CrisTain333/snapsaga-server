@@ -4,7 +4,6 @@ import catchAsync from '../../shared/catchAsync';
 import { sService } from './service';
 import sendResponse from '../../shared/sendResponse';
 
-
 const getSingleService = catchAsync(
     async (req: Request, res: Response) => {
         const { id } = req.params;

@@ -139,7 +139,9 @@ const updateService = async (id: number, data: any) => {
 };
 
 const createService = async (req: any) => {
-    const file = req.files;
+    const file = req.file;
+    // console.log(file)
+    const images = [file];
     const serviceData = req.body;
 
     const {
@@ -152,12 +154,12 @@ const createService = async (req: any) => {
     } = serviceData;
 
     try {
-        const imageUrl = await uploadMultipleFiles(file);
+        const imageUrl = await uploadMultipleFiles(images);
         const result = await prisma.service.create({
             data: {
                 title,
-                price,
-                availability,
+                price: parseInt(price),
+                availability: availability === 'true' ? true : false,
                 category,
                 description,
                 rating,
@@ -166,7 +168,6 @@ const createService = async (req: any) => {
         });
         return result;
     } catch (error) {
-        console.log(error);
         throw new ApiError(
             httpCode.BAD_REQUEST,
             ' An Error was encountered while creating service'

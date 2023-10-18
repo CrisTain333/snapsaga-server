@@ -1,14 +1,16 @@
 import express from 'express';
 import { ServiceController } from './controller';
-import validateRequest from '../../middleware/validateRequest';
-import { ServiceValidation } from './validation';
+// import validateRequest from '../../middleware/validateRequest';
+// import { ServiceValidation } from './validation';
 import auth from '../../middleware/auth';
 import { User_Role } from '../../enums/user';
+import { uploadSystem } from '../../middleware/uploadSystem';
 const router = express.Router();
 
 router.post(
     '/create',
-    validateRequest(ServiceValidation.ServiceSchema),
+    // validateRequest(ServiceValidation.ServiceSchema),
+    uploadSystem.single('banner'),
     ServiceController.createService
 );
 router.get('/best-services', ServiceController.getBestService);
