@@ -4,18 +4,6 @@ import catchAsync from '../../shared/catchAsync';
 import { sService } from './service';
 import sendResponse from '../../shared/sendResponse';
 
-const createService = catchAsync(
-    async (req: Request, res: Response) => {
-        const { ...serviceData } = req.body;
-        const result = await sService.createService(serviceData);
-        sendResponse(res, {
-            statusCode: 200,
-            success: true,
-            message: 'Service retrieved successfully',
-            data: result
-        });
-    }
-);
 
 const getSingleService = catchAsync(
     async (req: Request, res: Response) => {
@@ -39,6 +27,17 @@ const getBestService = catchAsync(
             message: 'Best Service retrieve successfully',
             data: result?.data,
             meta: result?.meta
+        });
+    }
+);
+const createService = catchAsync(
+    async (req: Request, res: Response) => {
+        const result = await sService.createService(req);
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'service created successfully',
+            data: result
         });
     }
 );

@@ -18,7 +18,7 @@ export async function uploadMultipleFiles(files: any) {
 
         // Loop through the files and upload each one
         for (const file of files) {
-            if (file?.fieldname === 'productBanner') {
+            if (file?.fieldname === 'banner') {
                 const uploadResult = await cloudinary.uploader.upload(
                     file.path,
                     {

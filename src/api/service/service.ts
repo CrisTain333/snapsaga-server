@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Service } from '@prisma/client';
+// import { Service } from '@prisma/client';
 import { prisma } from '../../shared/primsa';
 import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
-
-const createService = async (data: any): Promise<Service> => {
-    const result = await prisma.service.create({
-        data: data
-    });
-    return result;
-};
+import { uploadMultipleFiles } from '../../middleware/uploadImage';
 
 const getAllServices = async (
     page: number = 1,
@@ -144,7 +138,44 @@ const updateService = async (id: number, data: any) => {
     }
 };
 
+const createService = async (req: any) => {
+    const file = req.files;
+    const serviceData = req.body;
+
+    const {
+        title,
+        price,
+        category,
+        availability,
+        rating,
+        description
+    } = serviceData;
+
+    try {
+        const imageUrl = await uploadMultipleFiles(file);
+        const result = await prisma.service.create({
+            data: {
+                title,
+                price,
+                availability,
+                category,
+                description,
+                rating,
+                banner: imageUrl[0]
+            }
+        });
+        return result;
+    } catch (error) {
+        console.log(error);
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            ' An Error was encountered while creating service'
+        );
+    }
+};
+
 export const sService = {
+    // createService,
     createService,
     getAllServices,
     getSingleService,

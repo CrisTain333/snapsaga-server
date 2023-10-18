@@ -5,9 +5,12 @@ const ServiceSchema = z.object({
         title: z.string({
             required_error: 'title required'
         }),
-        banner: z.string({
-            required_error: 'banner required'
-        }),
+        banner: z.object(
+            {},
+            {
+                required_error: 'image is required'
+            }
+        ),
         description: z.string({
             required_error: 'description required'
         }),
