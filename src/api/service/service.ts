@@ -88,9 +88,29 @@ const getSingleService = async (id: number) => {
     return result;
 };
 
-const getBestServices = async () => {
-    const services = await prisma.service.findMany({});
-    return services;
+const getBestServices = async (
+    page: number = 1,
+    pageSize: number = 10
+) => {
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+    const services = await prisma.service.findMany({
+        skip,
+        take
+    });
+
+    const totalServices = await prisma.service.count({});
+
+    const meta = {
+        page: page,
+        limit: pageSize,
+        total: Math.ceil(totalServices / pageSize)
+    };
+
+    return {
+        data: services,
+        meta: meta
+    };
 };
 
 const deleteService = async (id: number) => {

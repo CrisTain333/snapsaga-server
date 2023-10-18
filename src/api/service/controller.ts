@@ -35,7 +35,8 @@ const getBestService = catchAsync(
             statusCode: 200,
             success: true,
             message: 'Best Service retrieve successfully',
-            data: result
+            data: result?.data,
+            meta: result?.meta
         });
     }
 );
