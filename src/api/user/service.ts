@@ -5,6 +5,7 @@ import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
 import { prisma } from '../../shared/primsa';
 import { uploadMultipleFiles } from '../../middleware/uploadImage';
+import { User } from '@prisma/client';
 
 const getUser = async (user: JwtPayload): Promise<IUser | null> => {
     const { email } = user;
@@ -20,6 +21,15 @@ const getUser = async (user: JwtPayload): Promise<IUser | null> => {
         throw new ApiError(httpCode.NOT_FOUND, 'User not found');
     }
     return profile;
+};
+
+const getAllAdmin = async (): Promise<User[]> => {
+    const result = await prisma.user.findMany({
+        where: {
+            role: 'admin'
+        }
+    });
+    return result;
 };
 
 const updateProfilePicture = async (req: any) => {
@@ -104,5 +114,6 @@ export const UserService = {
     updateProfilePicture,
     getAllUser,
     deleteUser,
-    updateProfileByAdmin
+    updateProfileByAdmin,
+    getAllAdmin
 };

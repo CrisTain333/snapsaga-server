@@ -74,6 +74,15 @@ const updateUser = catchAsync(async (req: any, res: Response) => {
         data: result
     });
 });
+const getAdmins = catchAsync(async (req: any, res: Response) => {
+    const result = await UserService.getAllAdmin();
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: `admin's fetched successfully`,
+        data: result
+    });
+});
 
 export const UserController = {
     getUser,
@@ -81,5 +90,6 @@ export const UserController = {
     updateProfileData,
     getAllUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    getAdmins
 };

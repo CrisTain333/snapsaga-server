@@ -19,6 +19,14 @@ router.post(
     uploadSystem.single('profilePicture'),
     UserController.updateProfilePicture
 );
+
+// router.patch('/update-role');
+router.get(
+    '/admins',
+    auth(User_Role.SUPER_ADMIN),
+    UserController.getAdmins
+);
+
 router.post(
     '/update-profile-data',
     validateRequest(userZodValidation.userUpdateZodSchema),
