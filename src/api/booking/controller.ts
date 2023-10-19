@@ -55,6 +55,21 @@ const cancelBookings = catchAsync(async (req: any, res: Response) => {
         data: result
     });
 });
+const confirmBookings = catchAsync(
+    async (req: any, res: Response) => {
+        // const { page }: any = req.query;
+        const id = req.params.id;
+        const result = await BookingService.confirmBooking(
+            parseInt(id)
+        );
+        sendResponse(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Bookings confirmed successfully',
+            data: result
+        });
+    }
+);
 
 const deleteUserBooking = catchAsync(
     async (req: any, res: Response) => {
@@ -77,5 +92,6 @@ export const BookingController = {
     getUserBookings,
     deleteUserBooking,
     getAllBookings,
-    cancelBookings
+    cancelBookings,
+    confirmBookings
 };

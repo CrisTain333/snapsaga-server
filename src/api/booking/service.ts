@@ -18,7 +18,6 @@ const createBooking = async (data: any) => {
     }
 };
 const cancelBooking = async (bookingId: any) => {
-    console.log(bookingId);
     try {
         const result = await prisma.booking.update({
             where: {
@@ -30,10 +29,27 @@ const cancelBooking = async (bookingId: any) => {
         });
         return result;
     } catch (error) {
-        console.log(error);
         throw new ApiError(
             httpCode.BAD_REQUEST,
             'Failed to cancel Booking'
+        );
+    }
+};
+const confirmBooking = async (bookingId: any) => {
+    try {
+        const result = await prisma.booking.update({
+            where: {
+                id: parseInt(bookingId)
+            },
+            data: {
+                status: BookingStatus.CONFIRMED
+            }
+        });
+        return result;
+    } catch (error) {
+        throw new ApiError(
+            httpCode.BAD_REQUEST,
+            'Failed to Confirm Booking'
         );
     }
 };
@@ -110,5 +126,6 @@ export const BookingService = {
     getUserBooking,
     deleteUserBooking,
     getAllBookings,
-    cancelBooking
+    cancelBooking,
+    confirmBooking
 };

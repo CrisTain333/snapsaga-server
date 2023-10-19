@@ -22,6 +22,11 @@ router.patch(
     auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
     BookingController.cancelBookings
 );
+router.patch(
+    '/confirm-booking/:id',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    BookingController.confirmBookings
+);
 router.delete(
     '/:id',
     auth(User_Role.USER, User_Role.SUPER_ADMIN),

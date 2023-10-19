@@ -107,11 +107,11 @@ const getBestServices = async (
     };
 };
 
-const deleteService = async (id: number) => {
+const deleteService = async (id: any) => {
     try {
         const services = await prisma.service.delete({
             where: {
-                id: id
+                id: parseInt(id)
             }
         });
         return services;
