@@ -41,12 +41,14 @@ const updateProfileData = catchAsync(
     }
 );
 const getAllUsers = catchAsync(async (req: any, res: Response) => {
-    const result = await UserService.getAllUser();
+    const { page }: any = req.query;
+    const result = await UserService.getAllUser(parseInt(page));
     sendResponse(res, {
         statusCode: 200,
         success: true,
         message: 'User  fetched successfully',
-        data: result
+        data: result?.data,
+        meta: result?.meta
     });
 });
 const deleteUser = catchAsync(async (req: any, res: Response) => {

@@ -94,7 +94,7 @@ const deleteUserBooking = async (bookingID: any) => {
 
 const getAllBookings = async (
     page: number = 1,
-    pageSize: number = 5
+    pageSize: number = 6
 ) => {
     const skip = (page - 1) * pageSize;
     const take = pageSize;

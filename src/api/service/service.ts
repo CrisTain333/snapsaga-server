@@ -84,7 +84,7 @@ const getSingleService = async (id: number) => {
 
 const getBestServices = async (
     page: number = 1,
-    pageSize: number = 5
+    pageSize: number = 6
 ) => {
     const skip = (page - 1) * pageSize;
     const take = pageSize;

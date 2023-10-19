@@ -71,9 +71,26 @@ const updateProfileData = async (req: any, data: any) => {
     return newData;
 };
 
-const getAllUser = async () => {
-    const result = await prisma.user.findMany({});
-    return result;
+const getAllUser = async (page: any = 1, pageSize: number = 6) => {
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+
+    const result = await prisma.user.findMany({
+        skip,
+        take
+    });
+    const totalServices = await prisma.user.count({});
+
+    const meta = {
+        page: parseInt(page),
+        limit: pageSize,
+        total: Math.ceil(totalServices / pageSize)
+    };
+
+    return {
+        data: result,
+        meta: meta
+    };
 };
 
 const deleteUser = async (id: any) => {
