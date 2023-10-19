@@ -93,8 +93,6 @@ const getAdmins = catchAsync(async (req: any, res: Response) => {
 const updateRole = catchAsync(async (req: any, res: Response) => {
     const email = req.params.email;
     const role = req.body.role;
-    console.log(email);
-    console.log(role);
     const result = await UserService.updateRole(email, role);
     sendResponse(res, {
         statusCode: 200,
