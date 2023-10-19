@@ -5,7 +5,6 @@ import ApiError from '../../error/ApiError';
 import { httpCode } from '../../shared/httpCodes';
 import { prisma } from '../../shared/primsa';
 import { uploadMultipleFiles } from '../../middleware/uploadImage';
-import { User } from '@prisma/client';
 
 const getUser = async (user: JwtPayload): Promise<IUser | null> => {
     const { email } = user;
@@ -21,15 +20,6 @@ const getUser = async (user: JwtPayload): Promise<IUser | null> => {
         throw new ApiError(httpCode.NOT_FOUND, 'User not found');
     }
     return profile;
-};
-
-const getAllAdmin = async (): Promise<User[]> => {
-    const result = await prisma.user.findMany({
-        where: {
-            role: 'admin'
-        }
-    });
-    return result;
 };
 
 const updateProfilePicture = async (req: any) => {
@@ -76,6 +66,30 @@ const getAllUser = async (page: any = 1, pageSize: number = 6) => {
     const take = pageSize;
 
     const result = await prisma.user.findMany({
+        skip,
+        take
+    });
+    const totalServices = await prisma.user.count({});
+
+    const meta = {
+        page: parseInt(page),
+        limit: pageSize,
+        total: Math.ceil(totalServices / pageSize)
+    };
+
+    return {
+        data: result,
+        meta: meta
+    };
+};
+
+const getAllAdmin = async (page: any = 1, pageSize: number = 6) => {
+    const skip = (parseInt(page) - 1) * pageSize;
+    const take = pageSize;
+    const result = await prisma.user.findMany({
+        where: {
+            role: 'admin'
+        },
         skip,
         take
     });

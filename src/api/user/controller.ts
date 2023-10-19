@@ -77,19 +77,24 @@ const updateUser = catchAsync(async (req: any, res: Response) => {
         data: result
     });
 });
+
 const getAdmins = catchAsync(async (req: any, res: Response) => {
-    const result = await UserService.getAllAdmin();
+    const { page }: any = req.query;
+    const result = await UserService.getAllAdmin(parseInt(page));
     sendResponse(res, {
         statusCode: 200,
         success: true,
         message: `admin's fetched successfully`,
-        data: result
+        data: result?.data,
+        meta: result?.meta
     });
 });
 
 const updateRole = catchAsync(async (req: any, res: Response) => {
     const email = req.params.email;
-    const role = req.body;
+    const role = req.body.role;
+    console.log(email);
+    console.log(role);
     const result = await UserService.updateRole(email, role);
     sendResponse(res, {
         statusCode: 200,

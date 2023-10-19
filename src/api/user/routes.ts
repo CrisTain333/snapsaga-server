@@ -28,7 +28,7 @@ router.get(
 );
 
 router.patch(
-    '/admin/update-role',
+    '/admin/update-role/:email',
     auth(User_Role.SUPER_ADMIN),
     UserController.updateRole
 );
