@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BookingRoute = void 0;
+const express_1 = __importDefault(require("express"));
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
+const validation_1 = require("./validation");
+const controller_1 = require("./controller");
+const user_1 = require("../../enums/user");
+const router = express_1.default.Router();
+router.post('/', (0, auth_1.default)(), (0, validateRequest_1.default)(validation_1.BookingValidation.BookingZodSchema), controller_1.BookingController.createBooking);
+router.get('/all-bookings', (0, auth_1.default)(user_1.User_Role.ADMIN, user_1.User_Role.SUPER_ADMIN), controller_1.BookingController.getAllBookings);
+router.patch('/cancel-booking/:id', (0, auth_1.default)(user_1.User_Role.ADMIN, user_1.User_Role.SUPER_ADMIN), controller_1.BookingController.cancelBookings);
+router.patch('/confirm-booking/:id', (0, auth_1.default)(user_1.User_Role.ADMIN, user_1.User_Role.SUPER_ADMIN), controller_1.BookingController.confirmBookings);
+router.delete('/:id', (0, auth_1.default)(user_1.User_Role.USER, user_1.User_Role.SUPER_ADMIN), controller_1.BookingController.deleteUserBooking);
+router.get('/', (0, auth_1.default)(), controller_1.BookingController.getUserBookings);
+exports.BookingRoute = router;

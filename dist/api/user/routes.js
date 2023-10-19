@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserRoute = void 0;
+const express_1 = __importDefault(require("express"));
+const controller_1 = require("./controller");
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const uploadSystem_1 = require("../../middleware/uploadSystem");
+const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
+const validate_1 = require("./validate");
+const user_1 = require("../../enums/user");
+const router = express_1.default.Router();
+router.get('/all-users', (0, auth_1.default)(user_1.User_Role.ADMIN, user_1.User_Role.SUPER_ADMIN), controller_1.UserController.getAllUsers);
+router.get('/me', (0, auth_1.default)(), controller_1.UserController.getUser);
+router.post('/update-profile', (0, auth_1.default)(), uploadSystem_1.uploadSystem.single('profilePicture'), controller_1.UserController.updateProfilePicture);
+// router.patch('/update-role');
+router.get('/admins', (0, auth_1.default)(user_1.User_Role.SUPER_ADMIN), controller_1.UserController.getAdmins);
+router.patch('/admin/update-role/:email', (0, auth_1.default)(user_1.User_Role.SUPER_ADMIN), controller_1.UserController.updateRole);
+router.patch('/:id', (0, validateRequest_1.default)(validate_1.userZodValidation.userUpdateAdminZodSchema), (0, auth_1.default)(user_1.User_Role.ADMIN, user_1.User_Role.SUPER_ADMIN), controller_1.UserController.updateUser);
+router.post('/update-profile-data', (0, validateRequest_1.default)(validate_1.userZodValidation.userUpdateZodSchema), (0, auth_1.default)(), controller_1.UserController.updateProfileData);
+router.delete('/:id', (0, auth_1.default)(user_1.User_Role.ADMIN, user_1.User_Role.SUPER_ADMIN), controller_1.UserController.deleteUser);
+exports.UserRoute = router;

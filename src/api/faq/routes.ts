@@ -9,5 +9,17 @@ router.post(
     auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
     FaqController.createFaq
 );
+router.get('/', FaqController.getFaq);
+
+router.delete(
+    '/:id',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    FaqController.deleteFaq
+);
+router.patch(
+    '/:id',
+    auth(User_Role.ADMIN, User_Role.SUPER_ADMIN),
+    FaqController.updateFaq
+);
 
 export const FaqRoute = router;
