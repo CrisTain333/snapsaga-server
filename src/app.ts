@@ -5,7 +5,6 @@ import express, {
     Response
 } from 'express';
 import cors from 'cors';
-// import globalErrorHandler from './middleware/globalErrorHandler';
 import cookieParser from 'cookie-parser';
 import router from './routes';
 import globalErrorHandler from './middleware/globalErrorHandler';
@@ -26,11 +25,6 @@ app.use(
 );
 
 // Entrance
-
-// For Initial Server Test
-// app.use('/', router);
-
-// For Development
 app.use('/api/v1', router);
 
 // Global Error handler

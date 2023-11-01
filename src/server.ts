@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import config from './config';
 import app from './app';
-// import { errorLogger, logger } from './shared/logger';
 import { Server } from 'http';
 
 process.on('uncaughtException', error => {
